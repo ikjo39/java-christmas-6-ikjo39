@@ -1,6 +1,8 @@
 package christmas.controller;
 
 import christmas.handler.ExceptionRetryHandler;
+import christmas.model.OrderSheets;
+import christmas.model.OrderedMenus;
 import christmas.model.VisitDate;
 import christmas.view.InputView;
 import christmas.view.OutputView;
@@ -19,6 +21,14 @@ public class EventPlannerController {
     public void run() {
         outputView.printPlannerIntroduction();
         VisitDate visitDate = getVisitDate();
+        OrderedMenus orderedMenus = getOrderedMenus();
+    }
+
+    private OrderedMenus getOrderedMenus() {
+        return retryHandler.retryUntilValid(() -> {
+            OrderSheets orderSheets = new OrderSheets(inputView.readMenuAndCount());
+            return new OrderedMenus(orderSheets.getOrderedMenus());
+        });
     }
 
     private VisitDate getVisitDate() {
