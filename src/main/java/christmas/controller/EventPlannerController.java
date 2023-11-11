@@ -16,5 +16,6 @@ public class EventPlannerController {
     }
 
     public void run() {
+        outputView.printPlannerIntroduction();
     }
 }
