@@ -4,6 +4,9 @@ import static christmas.constant.MenuCategory.APPETIZER;
 import static christmas.constant.MenuCategory.DESSERT;
 import static christmas.constant.MenuCategory.DRINK;
 import static christmas.constant.MenuCategory.MAIN_DISH;
+import static christmas.constant.MenuCategory.NONE;
+
+import java.util.Arrays;
 
 public enum Menu {
     MUSHROOM_CREAM_SOUP(APPETIZER, "양송이스프", 6000),
@@ -20,7 +23,9 @@ public enum Menu {
 
     ZERO_COKE(DRINK, "제로콜라", 3000),
     RED_WINE(DRINK, "레드와인", 60000),
-    CHAMPAGNE(DRINK, "샴페인", 25000);
+    CHAMPAGNE(DRINK, "샴페인", 25000),
+
+    NOTHING(NONE, "", 0);
 
     private final MenuCategory menuCategory;
     private final String name;
@@ -32,19 +37,18 @@ public enum Menu {
         this.price = price;
     }
 
+    public static Menu from(String name) {
+        return Arrays.stream(Menu.values())
+                .filter(menu -> name.equals(menu.name))
+                .findFirst()
+                .orElse(NOTHING);
+    }
+
     public boolean isMenuDrink() {
         return menuCategory == DRINK;
     }
 
-    public MenuCategory getMenuCategory() {
-        return menuCategory;
-    }
-
     public String getName() {
         return name;
-    }
-
-    public int getPrice() {
-        return price;
     }
 }
