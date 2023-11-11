@@ -1,6 +1,7 @@
 package christmas.controller;
 
 import christmas.handler.ExceptionRetryHandler;
+import christmas.model.VisitDate;
 import christmas.view.InputView;
 import christmas.view.OutputView;
 
@@ -17,5 +18,10 @@ public class EventPlannerController {
 
     public void run() {
         outputView.printPlannerIntroduction();
+        VisitDate visitDate = getVisitDate();
+    }
+
+    private VisitDate getVisitDate() {
+        return retryHandler.retryUntilValid(() -> new VisitDate(inputView.readVisitDate()));
     }
 }
