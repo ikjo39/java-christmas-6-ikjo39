@@ -33,6 +33,10 @@ public class OrderedMenu {
         return menu.isMenuDrink();
     }
 
+    public String getMenuName() {
+        return menu.getName();
+    }
+
     public int getAmount() {
         return amount;
     }

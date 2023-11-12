@@ -34,4 +34,8 @@ public class OrderedMenus {
             throw new IllegalArgumentException(MORE_THAN_MAXIMUM_ORDER_COUNT.getMessage());
         }
     }
+
+    public List<OrderedMenu> getOrderedMenus() {
+        return orderedMenus;
+    }
 }
