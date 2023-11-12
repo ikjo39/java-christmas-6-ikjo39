@@ -10,6 +10,8 @@ import christmas.constant.Menu;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 class OrderedMenuTest {
     @Nested
@@ -53,5 +55,20 @@ class OrderedMenuTest {
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage(INVALID_ORDER.getMessage());
         }
+    }
+
+    @DisplayName("메뉴의 이름을 반환한다.")
+    @ValueSource(strings = {"TAPAS", "BBQ_RIB", "CHOCOLATE_CAKE"})
+    @ParameterizedTest
+    void getMenuName(Menu given) {
+        // given
+        OrderedMenu orderedMenu = new OrderedMenu(given, 3);
+        String expected = given.getName();
+
+        // when
+        String result = orderedMenu.getMenuName();
+
+        // then
+        assertThat(result).isEqualTo(expected);
     }
 }
