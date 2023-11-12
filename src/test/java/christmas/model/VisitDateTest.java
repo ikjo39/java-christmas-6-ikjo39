@@ -31,7 +31,7 @@ class VisitDateTest {
         }
 
         @DisplayName("[실패] 이벤트 달 내 유효한 일이 아닐 경우 예외가 발생한다.")
-        @ValueSource(strings = {"0", "32", "225"})
+        @ValueSource(ints = {0, 32, 225})
         @ParameterizedTest
         void exceptionInvalidDayOfMonth(int given) {
             // when // then
@@ -39,5 +39,19 @@ class VisitDateTest {
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage(INVALID_VISIT_DAY.getMessage());
         }
+    }
+
+    @DisplayName("예정된 방문일의 일자를 구한다.")
+    @ValueSource(ints = {1, 6, 9, 30})
+    @ParameterizedTest
+    void getDayOfMonth(int given) {
+        // given
+        VisitDate visitDate = new VisitDate(given);
+
+        // when
+        int result = visitDate.getDayOfMonth();
+
+        // then
+        assertThat(result).isEqualTo(given);
     }
 }
