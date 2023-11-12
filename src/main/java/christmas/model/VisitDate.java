@@ -22,4 +22,12 @@ public class VisitDate {
             throw new IllegalArgumentException(INVALID_VISIT_DAY.getMessage());
         }
     }
+
+    public int getMonth() {
+        return EVENT_MONTH;
+    }
+
+    public int getDayOfMonth() {
+        return visitDate.getDayOfMonth();
+    }
 }

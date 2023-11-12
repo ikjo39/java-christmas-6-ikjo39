@@ -22,6 +22,7 @@ public class EventPlannerController {
         outputView.printPlannerIntroduction();
         VisitDate visitDate = getVisitDate();
         OrderedMenus orderedMenus = getOrderedMenus();
+        outputView.printEventPreviewIntroduction(visitDate);
     }
 
     private OrderedMenus getOrderedMenus() {
