@@ -3,7 +3,9 @@ package christmas.model;
 import static christmas.constant.ExceptionMessage.MORE_THAN_MAXIMUM_ORDER_COUNT;
 import static christmas.constant.ExceptionMessage.ORDER_ONLY_DRINK;
 import static christmas.constant.Menu.BBQ_RIB;
+import static christmas.constant.Menu.MUSHROOM_CREAM_SOUP;
 import static christmas.constant.Menu.RED_WINE;
+import static christmas.constant.Menu.T_BONE_STEAK;
 import static christmas.constant.Menu.ZERO_COKE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -11,9 +13,14 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import christmas.constant.Menu;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 class OrderedMenusTest {
 
@@ -62,13 +69,41 @@ class OrderedMenusTest {
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage(MORE_THAN_MAXIMUM_ORDER_COUNT.getMessage());
         }
+    }
 
-        private List<OrderedMenu> createMenus(List<Menu> menus, List<Integer> amounts) {
-            List<OrderedMenu> orderedMenus = new ArrayList<>();
-            for (int i = 0; i < menus.size(); i++) {
-                orderedMenus.add(new OrderedMenu(menus.get(i), amounts.get(i)));
-            }
-            return orderedMenus;
+    @DisplayName("주문한 메뉴 목록들의 가격 합산을 계산한다.")
+    @MethodSource("generateMenusAndAmounts")
+    @ParameterizedTest
+    void calculateTotalPrice(List<Menu> menus, List<Integer> amounts) {
+        // given
+        OrderedMenus orderedMenus = new OrderedMenus(createMenus(menus, amounts));
+        int expected = IntStream.range(0, menus.size())
+                .map(i -> {
+                    OrderedMenu orderedMenu = new OrderedMenu(menus.get(i), amounts.get(i));
+                    return orderedMenu.calculatePrice();
+                })
+                .sum();
+
+        // when
+        int result = orderedMenus.calculateTotalPrice();
+
+        // then
+        assertThat(result).isEqualTo(expected);
+    }
+
+    static Stream<Arguments> generateMenusAndAmounts() {
+        return Stream.of(
+                Arguments.of(List.of(MUSHROOM_CREAM_SOUP, BBQ_RIB, RED_WINE), List.of(1, 1, 2)),
+                Arguments.of(List.of(T_BONE_STEAK, ZERO_COKE), List.of(2, 3)),
+                Arguments.of(List.of(MUSHROOM_CREAM_SOUP, BBQ_RIB), List.of(3, 1))
+        );
+    }
+
+    private static List<OrderedMenu> createMenus(List<Menu> menus, List<Integer> amounts) {
+        List<OrderedMenu> orderedMenus = new ArrayList<>();
+        for (int i = 0; i < menus.size(); i++) {
+            orderedMenus.add(new OrderedMenu(menus.get(i), amounts.get(i)));
         }
+        return orderedMenus;
     }
 }
