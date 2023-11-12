@@ -35,6 +35,13 @@ public class OrderedMenus {
         }
     }
 
+    public int calculateTotalPrice() {
+        return orderedMenus.stream()
+                .map(OrderedMenu::calculatePrice)
+                .mapToInt(Integer::intValue)
+                .sum();
+    }
+
     public List<OrderedMenu> getOrderedMenus() {
         return orderedMenus;
     }

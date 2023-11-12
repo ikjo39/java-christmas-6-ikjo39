@@ -37,6 +37,10 @@ public class OrderedMenu {
         return menu.getName();
     }
 
+    public int calculatePrice() {
+        return menu.getPrice() * amount;
+    }
+
     public int getAmount() {
         return amount;
     }

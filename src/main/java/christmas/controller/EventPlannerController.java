@@ -24,6 +24,7 @@ public class EventPlannerController {
         OrderedMenus orderedMenus = getOrderedMenus();
         outputView.printEventPreviewIntroduction(visitDate);
         outputView.printOrderedMenus(orderedMenus);
+        outputView.printTotalPriceBeforeDiscount(orderedMenus);
     }
 
     private OrderedMenus getOrderedMenus() {
