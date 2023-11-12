@@ -11,6 +11,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 class OrderedMenuTest {
@@ -67,6 +68,21 @@ class OrderedMenuTest {
 
         // when
         String result = orderedMenu.getMenuName();
+
+        // then
+        assertThat(result).isEqualTo(expected);
+    }
+
+    @DisplayName("주문한 메뉴의 가격을 계산한다.")
+    @CsvSource(value = {"TAPAS,3", "BBQ_RIB,1", "CHOCOLATE_CAKE,5"})
+    @ParameterizedTest
+    void calculatePrice(Menu menu, int amount) {
+        // given
+        OrderedMenu orderedMenu = new OrderedMenu(menu, amount);
+        int expected = menu.getPrice() * amount;
+
+        // when
+        int result = orderedMenu.calculatePrice();
 
         // then
         assertThat(result).isEqualTo(expected);
