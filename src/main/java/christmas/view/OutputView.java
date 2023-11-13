@@ -1,17 +1,19 @@
 package christmas.view;
 
+import static christmas.constant.OutputMessage.AMOUNT_FORMAT;
 import static christmas.constant.OutputMessage.BENEFITS;
+import static christmas.constant.OutputMessage.BENEFIT_AMOUNT_FORMAT;
 import static christmas.constant.OutputMessage.EVENT_PREVIEW_INTRODUCTION_FORMAT;
 import static christmas.constant.OutputMessage.GIVEAWAY_MENU;
 import static christmas.constant.OutputMessage.ORDERED_MENU;
 import static christmas.constant.OutputMessage.ORDERED_MENU_FORMAT;
 import static christmas.constant.OutputMessage.PLANNER_INTRODUCTION;
+import static christmas.constant.OutputMessage.TOTAL_BENEFITS_AMOUNT;
 import static christmas.constant.OutputMessage.TOTAL_PRICE;
-import static christmas.constant.OutputMessage.TOTAL_PRICE_FORMAT;
 
 import christmas.constant.OutputMessage;
-import christmas.dto.Benefits;
 import christmas.dto.GiveAway;
+import christmas.model.Benefits;
 import christmas.model.OrderedMenu;
 import christmas.model.OrderedMenus;
 import christmas.model.VisitDate;
@@ -48,7 +50,7 @@ public class OutputView {
 
     public void printTotalPriceBeforeDiscount(OrderedMenus orderedMenus) {
         printOutputMessage(TOTAL_PRICE);
-        System.out.printf(TOTAL_PRICE_FORMAT.getMessage(), NUMBER_FORMAT.format(orderedMenus.calculateTotalPrice()));
+        System.out.printf(AMOUNT_FORMAT.getMessage(), NUMBER_FORMAT.format(orderedMenus.calculateTotalPrice()));
         System.out.println();
     }
 
@@ -61,6 +63,13 @@ public class OutputView {
         printOutputMessage(BENEFITS);
         List<String> texts = benefits.convertOutputText();
         texts.forEach(System.out::printf);
+        System.out.println();
+    }
+
+    public void printBenefitsTotal(Benefits benefits) {
+        printOutputMessage(TOTAL_BENEFITS_AMOUNT);
+        System.out.printf(BENEFIT_AMOUNT_FORMAT.getMessage(), NUMBER_FORMAT.format(benefits.getTotalBenefits()));
+        System.out.println();
     }
 
     private void printOutputMessage(OutputMessage outputMessage) {

@@ -9,7 +9,6 @@ import static christmas.constant.MenuCategory.MAIN_DISH;
 
 import christmas.constant.DiscountEvent;
 import christmas.constant.Menu;
-import christmas.dto.Benefits;
 import christmas.dto.GiveAway;
 import java.util.HashMap;
 import java.util.Map;

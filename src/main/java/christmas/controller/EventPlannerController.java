@@ -1,6 +1,7 @@
 package christmas.controller;
 
 import christmas.handler.ExceptionRetryHandler;
+import christmas.model.Benefits;
 import christmas.model.EventValidator;
 import christmas.model.OrderSheets;
 import christmas.model.OrderedMenus;
@@ -30,7 +31,9 @@ public class EventPlannerController {
         TotalPrice totalPrice = new TotalPrice(orderedMenus.calculateTotalPrice());
         EventValidator eventValidator = new EventValidator(orderedMenus, visitDate, totalPrice);
         outputView.printGiveAwayMenu(eventValidator.getGiveAway());
-        outputView.printBenefits(eventValidator.getBenefits());
+        Benefits benefits = eventValidator.getBenefits();
+        outputView.printBenefits(benefits);
+        outputView.printBenefitsTotal(benefits);
     }
 
     private OrderedMenus getOrderedMenus() {

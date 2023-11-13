@@ -1,4 +1,4 @@
-package christmas.dto;
+package christmas.model;
 
 import static christmas.constant.OutputMessage.NONE;
 
@@ -7,8 +7,13 @@ import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Map;
 
-public record Benefits(Map<DiscountEvent, Integer> events) {
+public class Benefits {
     private static final DecimalFormat NUMBER_FORMAT = new DecimalFormat("#,##0");
+    private final Map<DiscountEvent, Integer> events;
+
+    public Benefits(Map<DiscountEvent, Integer> events) {
+        this.events = events;
+    }
 
     public List<String> convertOutputText() {
         if (events.isEmpty()) {
@@ -18,5 +23,15 @@ public record Benefits(Map<DiscountEvent, Integer> events) {
                 .map(discountEvent ->
                         String.format(discountEvent.getFormat(), NUMBER_FORMAT.format(events.get(discountEvent))))
                 .toList();
+    }
+
+    public int getTotalBenefits() {
+        if (events.isEmpty()) {
+            return 0;
+        }
+        return events.values()
+                .stream()
+                .mapToInt(Integer::intValue)
+                .sum();
     }
 }
