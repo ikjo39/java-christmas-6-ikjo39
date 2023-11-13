@@ -11,6 +11,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import christmas.constant.Menu;
+import christmas.constant.MenuCategory;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
@@ -20,6 +21,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
 class OrderedMenusTest {
@@ -86,6 +88,22 @@ class OrderedMenusTest {
 
         // when
         int result = orderedMenus.calculateTotalPrice();
+
+        // then
+        assertThat(result).isEqualTo(expected);
+    }
+
+    @DisplayName("해당 카테고리의 개수를 파악한다.")
+    @CsvSource(value = {"APPETIZER,2", "DRINK,5", "MAIN_DISH,3"})
+    @ParameterizedTest
+    void calculateCategoryCount(MenuCategory given, int expected) {
+        // given
+        List<Menu> menus = List.of(MUSHROOM_CREAM_SOUP, BBQ_RIB, RED_WINE, ZERO_COKE);
+        List<Integer> amounts = List.of(2, 3, 1, 4);
+        OrderedMenus orderedMenus = new OrderedMenus(createMenus(menus, amounts));
+
+        // when
+        int result = orderedMenus.calculateCategoryCount(given);
 
         // then
         assertThat(result).isEqualTo(expected);
