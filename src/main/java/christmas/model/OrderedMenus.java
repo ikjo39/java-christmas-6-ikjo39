@@ -2,6 +2,7 @@ package christmas.model;
 
 import static christmas.constant.ExceptionMessage.MORE_THAN_MAXIMUM_ORDER_COUNT;
 import static christmas.constant.ExceptionMessage.ORDER_ONLY_DRINK;
+import static christmas.constant.MenuCategory.DRINK;
 
 import christmas.constant.MenuCategory;
 import java.util.List;
@@ -19,7 +20,7 @@ public class OrderedMenus {
 
     private void validateMenusOnlyDrink(List<OrderedMenu> orderMenus) {
         long count = orderMenus.stream()
-                .filter(OrderedMenu::isMenuDrink)
+                .filter(orderedMenu -> orderedMenu.hasMenuSameCategory(DRINK))
                 .count();
         if (count == orderMenus.size()) {
             throw new IllegalArgumentException(ORDER_ONLY_DRINK.getMessage());

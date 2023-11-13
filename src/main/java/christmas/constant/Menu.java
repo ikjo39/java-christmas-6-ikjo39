@@ -44,10 +44,6 @@ public enum Menu {
                 .orElse(NOTHING);
     }
 
-    public boolean isMenuDrink() {
-        return menuCategory == DRINK;
-    }
-
     public MenuCategory getMenuCategory() {
         return menuCategory;
     }

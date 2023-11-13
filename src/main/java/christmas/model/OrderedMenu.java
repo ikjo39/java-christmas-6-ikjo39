@@ -30,10 +30,6 @@ public class OrderedMenu {
         }
     }
 
-    public boolean isMenuDrink() {
-        return menu.isMenuDrink();
-    }
-
     public boolean hasMenuSameCategory(MenuCategory category) {
         return category.equals(menu.getMenuCategory());
     }
