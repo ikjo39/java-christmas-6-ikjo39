@@ -1,5 +1,6 @@
 package christmas.model;
 
+import static christmas.constant.DiscountEvent.GIVEAWAY_EVENT;
 import static christmas.constant.OutputMessage.NONE;
 
 import christmas.constant.DiscountEvent;
@@ -31,6 +32,18 @@ public class Benefits {
         }
         return events.values()
                 .stream()
+                .mapToInt(Integer::intValue)
+                .sum();
+    }
+
+    public int getTotalDiscounts() {
+        if (events.isEmpty()) {
+            return 0;
+        }
+        return events.keySet()
+                .stream()
+                .filter(discountEvent -> !discountEvent.equals(GIVEAWAY_EVENT))
+                .map(events::get)
                 .mapToInt(Integer::intValue)
                 .sum();
     }

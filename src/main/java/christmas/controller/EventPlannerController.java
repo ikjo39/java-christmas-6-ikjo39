@@ -34,6 +34,7 @@ public class EventPlannerController {
         Benefits benefits = eventValidator.getBenefits();
         outputView.printBenefits(benefits);
         outputView.printBenefitsTotal(benefits);
+        outputView.printAfterDiscounted(totalPrice, benefits);
     }
 
     private OrderedMenus getOrderedMenus() {

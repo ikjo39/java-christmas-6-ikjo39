@@ -1,5 +1,6 @@
 package christmas.view;
 
+import static christmas.constant.OutputMessage.AFTER_DISCOUNTED_AMOUNT;
 import static christmas.constant.OutputMessage.AMOUNT_FORMAT;
 import static christmas.constant.OutputMessage.BENEFITS;
 import static christmas.constant.OutputMessage.BENEFIT_AMOUNT_FORMAT;
@@ -16,6 +17,7 @@ import christmas.dto.GiveAway;
 import christmas.model.Benefits;
 import christmas.model.OrderedMenu;
 import christmas.model.OrderedMenus;
+import christmas.model.TotalPrice;
 import christmas.model.VisitDate;
 import java.text.DecimalFormat;
 import java.util.List;
@@ -69,6 +71,13 @@ public class OutputView {
     public void printBenefitsTotal(Benefits benefits) {
         printOutputMessage(TOTAL_BENEFITS_AMOUNT);
         System.out.printf(BENEFIT_AMOUNT_FORMAT.getMessage(), NUMBER_FORMAT.format(benefits.getTotalBenefits()));
+        System.out.println();
+    }
+
+    public void printAfterDiscounted(TotalPrice totalPrice, Benefits benefits) {
+        printOutputMessage(AFTER_DISCOUNTED_AMOUNT);
+        int result = totalPrice.calculateAfterDiscountedAmount(benefits);
+        System.out.printf(AMOUNT_FORMAT.getMessage(), NUMBER_FORMAT.format(result));
         System.out.println();
     }
 

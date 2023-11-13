@@ -10,6 +10,7 @@ public enum OutputMessage {
     GIVEAWAY_MENU("<증정 메뉴>"),
     BENEFITS("<혜택 내역>"),
     TOTAL_BENEFITS_AMOUNT("<총혜택 금액>"),
+    AFTER_DISCOUNTED_AMOUNT("<할인 후 예상 결제 금액>"),
 
     EVENT_PREVIEW_INTRODUCTION_FORMAT("%d월 %d일에 우테코 식당에서 받을 이벤트 혜택 미리 보기!%n"),
     ORDERED_MENU_FORMAT("%s %d개%n"),

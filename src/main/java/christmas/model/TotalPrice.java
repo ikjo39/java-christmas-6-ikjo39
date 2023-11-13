@@ -17,4 +17,8 @@ public class TotalPrice {
     public boolean isSatisfiedGiveaway() {
         return totalPrice >= MINIMUM_PRICE_TO_GET_GIVEAWAY;
     }
+
+    public int calculateAfterDiscountedAmount(Benefits benefits) {
+        return totalPrice - benefits.getTotalDiscounts();
+    }
 }
