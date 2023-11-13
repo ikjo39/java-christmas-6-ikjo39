@@ -23,4 +23,8 @@ public enum DiscountEvent {
     public String getFormat() {
         return format;
     }
+
+    public int getDiscountAmount() {
+        return discountAmount;
+    }
 }
