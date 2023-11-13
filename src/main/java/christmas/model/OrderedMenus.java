@@ -3,6 +3,7 @@ package christmas.model;
 import static christmas.constant.ExceptionMessage.MORE_THAN_MAXIMUM_ORDER_COUNT;
 import static christmas.constant.ExceptionMessage.ORDER_ONLY_DRINK;
 
+import christmas.constant.MenuCategory;
 import java.util.List;
 
 public class OrderedMenus {
@@ -40,6 +41,12 @@ public class OrderedMenus {
                 .map(OrderedMenu::calculatePrice)
                 .mapToInt(Integer::intValue)
                 .sum();
+    }
+
+    public int calculateCategoryCount(MenuCategory category) {
+        return (int) orderedMenus.stream()
+                .filter(orderedMenu -> orderedMenu.hasMenuSameCategory(category))
+                .count();
     }
 
     public List<OrderedMenu> getOrderedMenus() {

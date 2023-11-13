@@ -3,6 +3,7 @@ package christmas.model;
 import static christmas.constant.ExceptionMessage.INVALID_ORDER;
 
 import christmas.constant.Menu;
+import christmas.constant.MenuCategory;
 
 public class OrderedMenu {
     private static final int MINIMUM_ORDER_COUNT = 1;
@@ -31,6 +32,10 @@ public class OrderedMenu {
 
     public boolean isMenuDrink() {
         return menu.isMenuDrink();
+    }
+
+    public boolean hasMenuSameCategory(MenuCategory category) {
+        return category.equals(menu.getMenuCategory());
     }
 
     public String getMenuName() {

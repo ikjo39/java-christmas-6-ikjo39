@@ -48,6 +48,10 @@ public enum Menu {
         return menuCategory == DRINK;
     }
 
+    public MenuCategory getMenuCategory() {
+        return menuCategory;
+    }
+
     public String getName() {
         return name;
     }
