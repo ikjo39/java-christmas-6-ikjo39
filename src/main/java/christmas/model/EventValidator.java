@@ -1,6 +1,7 @@
 package christmas.model;
 
 import static christmas.constant.DiscountEvent.CHRISTMAS_D_DAY_EVENT;
+import static christmas.constant.DiscountEvent.SPECIAL_EVENT;
 import static christmas.constant.DiscountEvent.WEEKDAY_EVENT;
 import static christmas.constant.DiscountEvent.WEEKEND_EVENT;
 import static christmas.constant.MenuCategory.DESSERT;
@@ -18,6 +19,7 @@ public class EventValidator {
     private static final int BASIC_DISCOUNT_AMOUNT = 1_000;
     private static final int WEEK_DISCOUNT_AMOUNT = 2023;
     private static final int GIVE_AWAY_AMOUNT = 1;
+    private static final int SPECIAL_DISCOUNT_AMOUNT = 1_000;
     private static final Menu GIVEAWAY_MENU = Menu.CHAMPAGNE;
     private static final OrderedMenu GIVE_AWAY = new OrderedMenu(GIVEAWAY_MENU, GIVE_AWAY_AMOUNT);
 
@@ -60,6 +62,13 @@ public class EventValidator {
         return 0;
     }
 
+    public int getSpecialDiscount() {
+        if (visitDate.isSpecialDay()) {
+            return SPECIAL_DISCOUNT_AMOUNT;
+        }
+        return 0;
+    }
+
     public Benefits getBenefits() {
         Map<DiscountEvent, Integer> discountEvents = new HashMap<>();
         if (!isEnabled()) {
@@ -82,6 +91,11 @@ public class EventValidator {
         int weekdayDiscount = getWeekdayDiscount();
         if (weekdayDiscount > 0) {
             discountEvents.put(WEEKDAY_EVENT, weekdayDiscount);
+        }
+
+        int specialDiscount = getSpecialDiscount();
+        if (specialDiscount > 0) {
+            discountEvents.put(SPECIAL_EVENT, specialDiscount);
         }
 
         return new Benefits(discountEvents);

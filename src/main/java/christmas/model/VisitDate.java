@@ -3,6 +3,7 @@ package christmas.model;
 import static christmas.constant.ExceptionMessage.INVALID_VISIT_DAY;
 import static java.time.DayOfWeek.FRIDAY;
 import static java.time.DayOfWeek.SATURDAY;
+import static java.time.DayOfWeek.SUNDAY;
 
 import java.time.DateTimeException;
 import java.time.DayOfWeek;
@@ -45,5 +46,9 @@ public class VisitDate {
 
     public boolean isWeekend() {
         return WEEKENDS.contains(visitDayOfWeek);
+    }
+
+    public boolean isSpecialDay() {
+        return visitDayOfWeek.equals(SUNDAY) || visitDate.isEqual(CHRISTMAS_DATE);
     }
 }
