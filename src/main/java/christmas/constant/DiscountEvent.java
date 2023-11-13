@@ -1,18 +1,16 @@
 package christmas.constant;
 
 public enum DiscountEvent {
-    CHRISTMAS_D_DAY_EVENT("크리스마스 디데이 할인: -%s원%n", 100),
-    WEEKDAY_EVENT("평일 할인: -%s원%n", 2023),
-    WEEKEND_EVENT("주말 할인: -%s원%n", 2023),
-    SPECIAL_EVENT("특별 할인: -%s원%n", 2023),
-    GIVEAWAY_EVENT("증정 이벤트: -%s원%n", 0);
+    CHRISTMAS_D_DAY_EVENT("크리스마스 디데이 할인: -%s원%n"),
+    WEEKDAY_EVENT("평일 할인: -%s원%n"),
+    WEEKEND_EVENT("주말 할인: -%s원%n"),
+    SPECIAL_EVENT("특별 할인: -%s원%n"),
+    GIVEAWAY_EVENT("증정 이벤트: -%s원%n");
 
     private final String format;
-    private final int discountAmount;
 
-    DiscountEvent(String format, int discountAmount) {
+    DiscountEvent(String format) {
         this.format = format;
-        this.discountAmount = discountAmount;
     }
 
     @Override
@@ -22,9 +20,5 @@ public enum DiscountEvent {
 
     public String getFormat() {
         return format;
-    }
-
-    public int getDiscountAmount() {
-        return discountAmount;
     }
 }

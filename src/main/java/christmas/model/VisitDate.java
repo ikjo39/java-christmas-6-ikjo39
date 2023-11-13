@@ -1,19 +1,26 @@
 package christmas.model;
 
 import static christmas.constant.ExceptionMessage.INVALID_VISIT_DAY;
+import static java.time.DayOfWeek.FRIDAY;
+import static java.time.DayOfWeek.SATURDAY;
 
 import java.time.DateTimeException;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.util.List;
 
 public class VisitDate {
     private static final int EVENT_YEAR = 2023;
     private static final int EVENT_MONTH = 12;
     private static final LocalDate CHRISTMAS_DATE = LocalDate.of(EVENT_YEAR, 12, 25);
+    private static final List<DayOfWeek> WEEKENDS = List.of(FRIDAY, SATURDAY);
 
     private final LocalDate visitDate;
+    private final DayOfWeek visitDayOfWeek;
 
     public VisitDate(int day) {
         this.visitDate = convertDayToLocalDate(day);
+        this.visitDayOfWeek = visitDate.getDayOfWeek();
     }
 
     private static LocalDate convertDayToLocalDate(int day) {
@@ -34,5 +41,9 @@ public class VisitDate {
 
     public boolean isChristmasDiscountEnabled() {
         return CHRISTMAS_DATE.isAfter(visitDate) || CHRISTMAS_DATE.isEqual(visitDate);
+    }
+
+    public boolean isWeekend() {
+        return WEEKENDS.contains(visitDayOfWeek);
     }
 }
