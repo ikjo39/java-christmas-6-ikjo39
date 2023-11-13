@@ -1,5 +1,6 @@
 package christmas.view;
 
+import static christmas.constant.OutputMessage.BENEFITS;
 import static christmas.constant.OutputMessage.EVENT_PREVIEW_INTRODUCTION_FORMAT;
 import static christmas.constant.OutputMessage.GIVEAWAY_MENU;
 import static christmas.constant.OutputMessage.ORDERED_MENU;
@@ -9,6 +10,7 @@ import static christmas.constant.OutputMessage.TOTAL_PRICE;
 import static christmas.constant.OutputMessage.TOTAL_PRICE_FORMAT;
 
 import christmas.constant.OutputMessage;
+import christmas.dto.Benefits;
 import christmas.dto.GiveAway;
 import christmas.model.OrderedMenu;
 import christmas.model.OrderedMenus;
@@ -53,6 +55,12 @@ public class OutputView {
     public void printGiveAwayMenu(GiveAway giveAway) {
         printOutputMessage(GIVEAWAY_MENU);
         System.out.println(giveAway.convertOutputText());
+    }
+
+    public void printBenefits(Benefits benefits) {
+        printOutputMessage(BENEFITS);
+        List<String> texts = benefits.convertOutputText();
+        texts.forEach(System.out::printf);
     }
 
     private void printOutputMessage(OutputMessage outputMessage) {

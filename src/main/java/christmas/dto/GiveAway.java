@@ -10,7 +10,7 @@ public record GiveAway(OrderedMenu orderedMenu) {
 
     public String convertOutputText() {
         if (Objects.isNull(orderedMenu)) {
-            return NONE.getMessage();
+            return String.format(NONE.getMessage());
         }
         return String.format(ORDERED_MENU_FORMAT.getMessage(), orderedMenu.getMenuName(), orderedMenu.getAmount());
     }

@@ -30,6 +30,7 @@ public class EventPlannerController {
         TotalPrice totalPrice = new TotalPrice(orderedMenus.calculateTotalPrice());
         EventValidator eventValidator = new EventValidator(totalPrice);
         outputView.printGiveAwayMenu(eventValidator.getGiveAway());
+        outputView.printBenefits(eventValidator.getBenefits());
     }
 
     private OrderedMenus getOrderedMenus() {
