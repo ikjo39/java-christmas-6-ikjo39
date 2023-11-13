@@ -4,6 +4,7 @@ import static christmas.constant.OutputMessage.AFTER_DISCOUNTED_AMOUNT;
 import static christmas.constant.OutputMessage.AMOUNT_FORMAT;
 import static christmas.constant.OutputMessage.BENEFITS;
 import static christmas.constant.OutputMessage.BENEFIT_AMOUNT_FORMAT;
+import static christmas.constant.OutputMessage.EVENT_BADGE;
 import static christmas.constant.OutputMessage.EVENT_PREVIEW_INTRODUCTION_FORMAT;
 import static christmas.constant.OutputMessage.GIVEAWAY_MENU;
 import static christmas.constant.OutputMessage.ORDERED_MENU;
@@ -15,6 +16,7 @@ import static christmas.constant.OutputMessage.TOTAL_PRICE;
 import christmas.constant.OutputMessage;
 import christmas.dto.GiveAway;
 import christmas.model.Benefits;
+import christmas.model.EventTotalBenefit;
 import christmas.model.OrderedMenu;
 import christmas.model.OrderedMenus;
 import christmas.model.TotalPrice;
@@ -79,6 +81,11 @@ public class OutputView {
         int result = totalPrice.calculateAfterDiscountedAmount(benefits);
         System.out.printf(AMOUNT_FORMAT.getMessage(), NUMBER_FORMAT.format(result));
         System.out.println();
+    }
+
+    public void printBadge(EventTotalBenefit totalBenefit) {
+        printOutputMessage(EVENT_BADGE);
+        System.out.println(totalBenefit.getEventBadge().getName());
     }
 
     private void printOutputMessage(OutputMessage outputMessage) {

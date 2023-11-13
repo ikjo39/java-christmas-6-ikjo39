@@ -2,6 +2,7 @@ package christmas.controller;
 
 import christmas.handler.ExceptionRetryHandler;
 import christmas.model.Benefits;
+import christmas.model.EventTotalBenefit;
 import christmas.model.EventValidator;
 import christmas.model.OrderSheets;
 import christmas.model.OrderedMenus;
@@ -35,6 +36,8 @@ public class EventPlannerController {
         outputView.printBenefits(benefits);
         outputView.printBenefitsTotal(benefits);
         outputView.printAfterDiscounted(totalPrice, benefits);
+        EventTotalBenefit totalBenefit = new EventTotalBenefit(benefits.getTotalBenefits());
+        outputView.printBadge(totalBenefit);
     }
 
     private OrderedMenus getOrderedMenus() {
