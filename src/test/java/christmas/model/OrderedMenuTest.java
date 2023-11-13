@@ -7,6 +7,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import christmas.constant.Menu;
+import christmas.constant.MenuCategory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -56,6 +57,20 @@ class OrderedMenuTest {
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage(INVALID_ORDER.getMessage());
         }
+    }
+
+    @DisplayName("메뉴가 같은 카테고리를 가지고 있는지 확인한다.")
+    @CsvSource(value = {"TAPAS,APPETIZER,true", "BBQ_RIB,DRINK,false", "CHOCOLATE_CAKE,DESSERT,true"})
+    @ParameterizedTest
+    void hasMenuSameCategory(Menu menu, MenuCategory given, boolean expected) {
+        // given
+        OrderedMenu orderedMenu = new OrderedMenu(menu, 3);
+
+        // when
+        boolean result = orderedMenu.hasMenuSameCategory(given);
+
+        // then
+        assertThat(result).isEqualTo(expected);
     }
 
     @DisplayName("메뉴의 이름을 반환한다.")
