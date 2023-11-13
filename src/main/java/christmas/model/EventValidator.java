@@ -1,8 +1,10 @@
 package christmas.model;
 
 import static christmas.constant.DiscountEvent.CHRISTMAS_D_DAY_EVENT;
+import static christmas.constant.DiscountEvent.WEEKDAY_EVENT;
 import static christmas.constant.DiscountEvent.WEEKEND_EVENT;
 import static christmas.constant.MenuCategory.DESSERT;
+import static christmas.constant.MenuCategory.MAIN_DISH;
 
 import christmas.constant.DiscountEvent;
 import christmas.constant.Menu;
@@ -51,6 +53,13 @@ public class EventValidator {
         return 0;
     }
 
+    public int getWeekdayDiscount() {
+        if (!visitDate.isWeekend()) {
+            return orderedMenus.calculateCategoryCount(MAIN_DISH) * WEEK_DISCOUNT_AMOUNT;
+        }
+        return 0;
+    }
+
     public Benefits getBenefits() {
         Map<DiscountEvent, Integer> discountEvents = new HashMap<>();
         if (!isEnabled()) {
@@ -68,6 +77,11 @@ public class EventValidator {
         int weekendDiscount = getWeekendDiscount();
         if (weekendDiscount > 0) {
             discountEvents.put(WEEKEND_EVENT, weekendDiscount);
+        }
+
+        int weekdayDiscount = getWeekdayDiscount();
+        if (weekdayDiscount > 0) {
+            discountEvents.put(WEEKDAY_EVENT, weekdayDiscount);
         }
 
         return new Benefits(discountEvents);
