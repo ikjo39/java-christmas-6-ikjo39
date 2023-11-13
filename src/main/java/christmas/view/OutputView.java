@@ -1,6 +1,7 @@
 package christmas.view;
 
 import static christmas.constant.OutputMessage.EVENT_PREVIEW_INTRODUCTION_FORMAT;
+import static christmas.constant.OutputMessage.GIVEAWAY_MENU;
 import static christmas.constant.OutputMessage.ORDERED_MENU;
 import static christmas.constant.OutputMessage.ORDERED_MENU_FORMAT;
 import static christmas.constant.OutputMessage.PLANNER_INTRODUCTION;
@@ -8,6 +9,7 @@ import static christmas.constant.OutputMessage.TOTAL_PRICE;
 import static christmas.constant.OutputMessage.TOTAL_PRICE_FORMAT;
 
 import christmas.constant.OutputMessage;
+import christmas.dto.GiveAway;
 import christmas.model.OrderedMenu;
 import christmas.model.OrderedMenus;
 import christmas.model.VisitDate;
@@ -26,7 +28,8 @@ public class OutputView {
     }
 
     public void printEventPreviewIntroduction(VisitDate visitDate) {
-        System.out.printf(EVENT_PREVIEW_INTRODUCTION_FORMAT.getMessage(), visitDate.getMonth(), visitDate.getDayOfMonth());
+        System.out.printf(EVENT_PREVIEW_INTRODUCTION_FORMAT.getMessage(), visitDate.getMonth(),
+                visitDate.getDayOfMonth());
         System.out.println();
     }
 
@@ -45,6 +48,11 @@ public class OutputView {
         printOutputMessage(TOTAL_PRICE);
         System.out.printf(TOTAL_PRICE_FORMAT.getMessage(), NUMBER_FORMAT.format(orderedMenus.calculateTotalPrice()));
         System.out.println();
+    }
+
+    public void printGiveAwayMenu(GiveAway giveAway) {
+        printOutputMessage(GIVEAWAY_MENU);
+        System.out.println(giveAway.convertOutputText());
     }
 
     private void printOutputMessage(OutputMessage outputMessage) {

@@ -1,8 +1,10 @@
 package christmas.controller;
 
 import christmas.handler.ExceptionRetryHandler;
+import christmas.model.EventValidator;
 import christmas.model.OrderSheets;
 import christmas.model.OrderedMenus;
+import christmas.model.TotalPrice;
 import christmas.model.VisitDate;
 import christmas.view.InputView;
 import christmas.view.OutputView;
@@ -25,6 +27,9 @@ public class EventPlannerController {
         outputView.printEventPreviewIntroduction(visitDate);
         outputView.printOrderedMenus(orderedMenus);
         outputView.printTotalPriceBeforeDiscount(orderedMenus);
+        TotalPrice totalPrice = new TotalPrice(orderedMenus.calculateTotalPrice());
+        EventValidator eventValidator = new EventValidator(totalPrice);
+        outputView.printGiveAwayMenu(eventValidator.getGiveAway());
     }
 
     private OrderedMenus getOrderedMenus() {
