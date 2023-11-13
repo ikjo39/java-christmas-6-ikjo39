@@ -4,11 +4,13 @@ import static christmas.constant.ExceptionMessage.INVALID_VISIT_DAY;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 class VisitDateTest {
@@ -21,13 +23,15 @@ class VisitDateTest {
         void successGetVisitDate() {
             // given
             int given = 7;
-            LocalDate expected = LocalDate.of(2023, 12, given);
+            LocalDate expectedDate = LocalDate.of(2023, 12, given);
+            DayOfWeek expectedDayOfWeek = DayOfWeek.THURSDAY;
 
             // when
             VisitDate visitDate = new VisitDate(given);
 
             // then
-            assertThat(visitDate).hasFieldOrPropertyWithValue("visitDate", expected);
+            assertThat(visitDate).hasFieldOrPropertyWithValue("visitDate", expectedDate)
+                    .hasFieldOrPropertyWithValue("visitDayOfWeek", expectedDayOfWeek);
         }
 
         @DisplayName("[실패] 이벤트 달 내 유효한 일이 아닐 경우 예외가 발생한다.")
@@ -53,5 +57,47 @@ class VisitDateTest {
 
         // then
         assertThat(result).isEqualTo(given);
+    }
+
+    @DisplayName("크리스마스 이벤트 기간인지 여부를 확인한다.")
+    @CsvSource(value = {"1,true", "25,true", "26,false", "30,false"})
+    @ParameterizedTest
+    void isChristmasDiscountEnabled(int given, boolean expected) {
+        // given
+        VisitDate visitDate = new VisitDate(given);
+
+        // when
+        boolean result = visitDate.isChristmasDiscountEnabled();
+
+        // then
+        assertThat(result).isEqualTo(expected);
+    }
+
+    @DisplayName("주말인지 여부를 확인한다.")
+    @CsvSource(value = {"8,true", "16,true", "6,false", "7,false"})
+    @ParameterizedTest
+    void isWeekend(int given, boolean expected) {
+        // given
+        VisitDate visitDate = new VisitDate(given);
+
+        // when
+        boolean result = visitDate.isWeekend();
+
+        // then
+        assertThat(result).isEqualTo(expected);
+    }
+
+    @DisplayName("특별한 날인지 여부를 확인한다.")
+    @CsvSource(value = {"10,true", "17,true", "25,true", "7,false"})
+    @ParameterizedTest
+    void isSpecial(int given, boolean expected) {
+        // given
+        VisitDate visitDate = new VisitDate(given);
+
+        // when
+        boolean result = visitDate.isSpecialDay();
+
+        // then
+        assertThat(result).isEqualTo(expected);
     }
 }
