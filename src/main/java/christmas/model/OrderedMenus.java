@@ -45,9 +45,11 @@ public class OrderedMenus {
     }
 
     public int calculateCategoryCount(MenuCategory category) {
-        return (int) orderedMenus.stream()
+        return orderedMenus.stream()
                 .filter(orderedMenu -> orderedMenu.hasMenuSameCategory(category))
-                .count();
+                .map(OrderedMenu::getAmount)
+                .mapToInt(Integer::intValue)
+                .sum();
     }
 
     public List<OrderedMenu> getOrderedMenus() {
