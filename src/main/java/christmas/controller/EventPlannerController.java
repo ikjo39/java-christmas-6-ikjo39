@@ -33,7 +33,7 @@ public class EventPlannerController {
         EventValidator eventValidator = new EventValidator(orderedMenus, visitDate, totalPrice);
         outputView.printGiveAwayMenu(eventValidator.getGiveAway());
         Benefits benefits = eventValidator.getBenefits();
-        outputView.printBenefits(benefits);
+        outputView.printBenefits(benefits.getBenefitInfos());
         outputView.printBenefitsTotal(benefits);
         outputView.printAfterDiscounted(totalPrice, benefits);
         EventTotalBenefit totalBenefit = new EventTotalBenefit(benefits.getTotalBenefits());

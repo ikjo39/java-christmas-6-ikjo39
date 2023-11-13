@@ -1,29 +1,20 @@
 package christmas.model;
 
 import static christmas.constant.DiscountEvent.GIVEAWAY_EVENT;
-import static christmas.constant.OutputMessage.NONE;
 
 import christmas.constant.DiscountEvent;
-import java.text.DecimalFormat;
-import java.util.List;
+import christmas.dto.BenefitInfos;
 import java.util.Map;
 
 public class Benefits {
-    private static final DecimalFormat NUMBER_FORMAT = new DecimalFormat("#,##0");
     private final Map<DiscountEvent, Integer> events;
 
     public Benefits(Map<DiscountEvent, Integer> events) {
         this.events = events;
     }
 
-    public List<String> convertOutputText() {
-        if (events.isEmpty()) {
-            return List.of(String.format(NONE.getMessage()));
-        }
-        return events.keySet().stream()
-                .map(discountEvent ->
-                        String.format(discountEvent.getFormat(), NUMBER_FORMAT.format(events.get(discountEvent))))
-                .toList();
+    public BenefitInfos getBenefitInfos() {
+        return new BenefitInfos(events, events.isEmpty());
     }
 
     public int getTotalBenefits() {

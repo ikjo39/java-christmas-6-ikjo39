@@ -33,10 +33,7 @@ public class EventValidator {
     }
 
     public GiveAway getGiveAway() {
-        if (totalPrice.isSatisfiedGiveaway()) {
-            return new GiveAway(GIVE_AWAY);
-        }
-        return new GiveAway(null);
+        return new GiveAway(GIVE_AWAY, totalPrice.isSatisfiedGiveaway());
     }
 
     public int getChristmasDiscount() {
