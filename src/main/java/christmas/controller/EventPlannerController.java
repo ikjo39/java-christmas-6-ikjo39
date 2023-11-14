@@ -63,7 +63,7 @@ public class EventPlannerController {
 
     private void printDiscountedPriceAndBadge(EventManager eventManager, EventBenefits benefits) {
         TotalDiscountManager totalDiscountManager =
-                new TotalDiscountManager(benefits.getTotalDiscounts(), eventManager);
+                new TotalDiscountManager(benefits, eventManager);
         outputView.printAfterDiscounted(totalDiscountManager);
         outputView.printBadge(totalDiscountManager);
     }
