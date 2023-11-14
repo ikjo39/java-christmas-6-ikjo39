@@ -11,6 +11,6 @@ public record EventBenefit(EventNameFormat eventNameFormat, int discountAmount) 
     }
 
     public boolean isEventEnabled() {
-        return discountAmount != 0;
+        return discountAmount > 0;
     }
 }
