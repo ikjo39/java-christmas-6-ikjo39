@@ -24,33 +24,58 @@ public class EventPlannerController {
     }
 
     public void run() {
+        printIntroduction();
+
+        VisitDate visitDate = getVisitDateUntilValidInput();
+        OrderedMenus orderedMenus = getOrderedMenusUntilValidInput();
+        EventManager eventManager = getEventManager(visitDate, orderedMenus);
+        EventBenefits benefits = new EventBenefits(eventManager.getEventBenefits());
+
+        printGivenUserInfo(visitDate, orderedMenus);
+        printEventResult(eventManager, benefits);
+    }
+
+    private void printIntroduction() {
         outputView.printPlannerIntroduction();
-        VisitDate visitDate = getVisitDate();
-        OrderedMenus orderedMenus = getOrderedMenus();
+    }
+
+    private static EventManager getEventManager(VisitDate visitDate, OrderedMenus orderedMenus) {
+        TotalPrice totalPrice = new TotalPrice(orderedMenus.calculateTotalPrice());
+        return new EventManager(new DiscountCalculator(orderedMenus, visitDate), totalPrice);
+    }
+
+    private void printGivenUserInfo(VisitDate visitDate, OrderedMenus orderedMenus) {
         outputView.printEventPreviewIntroduction(visitDate);
         outputView.printOrderedMenus(orderedMenus);
         outputView.printTotalPriceBeforeDiscount(orderedMenus);
-        TotalPrice totalPrice = new TotalPrice(orderedMenus.calculateTotalPrice());
-        EventManager eventManager = new EventManager(new DiscountCalculator(orderedMenus, visitDate), totalPrice);
+    }
+
+    private void printEventResult(EventManager eventManager, EventBenefits benefits) {
+        printDiscountInfo(eventManager, benefits);
+        printDiscountedPriceAndBadge(eventManager, benefits);
+    }
+
+    private void printDiscountInfo(EventManager eventManager, EventBenefits benefits) {
         outputView.printGiveAwayMenu(eventManager.getGiveaway());
-        EventBenefits benefits = new EventBenefits(eventManager.getEventBenefits());
         outputView.printBenefits(benefits);
         outputView.printBenefitsTotal(benefits);
-        TotalDiscountManager totalDiscountManager = new TotalDiscountManager(
-                benefits.getTotalDiscounts(), eventManager
-        );
+    }
+
+    private void printDiscountedPriceAndBadge(EventManager eventManager, EventBenefits benefits) {
+        TotalDiscountManager totalDiscountManager =
+                new TotalDiscountManager(benefits.getTotalDiscounts(), eventManager);
         outputView.printAfterDiscounted(totalDiscountManager);
         outputView.printBadge(totalDiscountManager);
     }
 
-    private OrderedMenus getOrderedMenus() {
+    private OrderedMenus getOrderedMenusUntilValidInput() {
         return retryHandler.retryUntilValid(() -> {
             OrderSheets orderSheets = new OrderSheets(inputView.readMenuAndCount());
             return new OrderedMenus(orderSheets.getOrderedMenus());
         });
     }
 
-    private VisitDate getVisitDate() {
+    private VisitDate getVisitDateUntilValidInput() {
         return retryHandler.retryUntilValid(() -> new VisitDate(inputView.readVisitDate()));
     }
 }
