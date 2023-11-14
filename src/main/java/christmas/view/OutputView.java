@@ -76,19 +76,12 @@ public class OutputView {
             System.out.println();
             return;
         }
-        printValidEventBenefits(eventBenefits);
+        List<EventBenefit> enabledBenefits = eventBenefits.getEnabledBenefits();
+        enabledBenefits.forEach(eventBenefit -> {
+            String format = eventBenefit.eventNameFormat().getFormat();
+            System.out.printf(format, NUMBER_FORMAT.format(eventBenefit.discountAmount()));
+        });
         System.out.println();
-    }
-
-    private void printValidEventBenefits(EventBenefits eventBenefits) {
-        eventBenefits.eventBenefits()
-                .stream()
-                .filter(EventBenefit::isEventEnabled)
-                .forEach(eventBenefit -> {
-                            String format = eventBenefit.eventNameFormat().getFormat();
-                            System.out.printf(format, NUMBER_FORMAT.format(eventBenefit.discountAmount()));
-                        }
-                );
     }
 
     public void printBenefitsTotal(EventBenefits benefits) {

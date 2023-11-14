@@ -25,4 +25,11 @@ public record EventBenefits(List<EventBenefit> eventBenefits) {
                 .mapToInt(Integer::intValue)
                 .sum();
     }
+
+    public List<EventBenefit> getEnabledBenefits() {
+        return eventBenefits
+                .stream()
+                .filter(EventBenefit::isEventEnabled)
+                .toList();
+    }
 }
