@@ -40,7 +40,7 @@ public class VisitDate {
         return visitDate.getDayOfMonth();
     }
 
-    public boolean isChristmasDiscountEnabled() {
+    public boolean isChristmasEventRange() {
         return CHRISTMAS_DATE.isAfter(visitDate) || CHRISTMAS_DATE.isEqual(visitDate);
     }
 
@@ -48,7 +48,7 @@ public class VisitDate {
         return WEEKENDS.contains(visitDayOfWeek);
     }
 
-    public boolean isSpecialDay() {
+    public boolean isSpecialDate() {
         return visitDayOfWeek.equals(SUNDAY) || visitDate.isEqual(CHRISTMAS_DATE);
     }
 }

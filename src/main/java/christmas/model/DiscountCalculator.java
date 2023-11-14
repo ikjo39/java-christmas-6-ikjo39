@@ -19,7 +19,7 @@ public class DiscountCalculator {
     }
 
     public int getChristmasDiscount() {
-        if (visitDate.isChristmasDiscountEnabled()) {
+        if (visitDate.isChristmasEventRange()) {
             int additionalBenefits = CHRISTMAS_DISCOUNT_AMOUNT * (visitDate.getDayOfMonth() - 1);
             return BASIC_DISCOUNT_AMOUNT + additionalBenefits;
         }
@@ -41,7 +41,7 @@ public class DiscountCalculator {
     }
 
     public int getSpecialDiscount() {
-        if (visitDate.isSpecialDay()) {
+        if (visitDate.isSpecialDate()) {
             return SPECIAL_DISCOUNT_AMOUNT;
         }
         return NO_DISCOUNT;

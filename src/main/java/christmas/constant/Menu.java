@@ -9,21 +9,21 @@ import static christmas.constant.MenuCategory.NONE;
 import java.util.Arrays;
 
 public enum Menu {
-    MUSHROOM_CREAM_SOUP(APPETIZER, "양송이스프", 6000),
-    TAPAS(APPETIZER, "타파스", 5500),
-    CAESAR_SALAD(APPETIZER, "시저샐러드", 8000),
+    MUSHROOM_CREAM_SOUP(APPETIZER, "양송이스프", 6_000),
+    TAPAS(APPETIZER, "타파스", 5_500),
+    CAESAR_SALAD(APPETIZER, "시저샐러드", 8_000),
 
-    T_BONE_STEAK(MAIN_DISH, "티본스테이크", 55000),
-    BBQ_RIB(MAIN_DISH, "바비큐립", 54000),
-    SEAFOOD_SPAGHETTI(MAIN_DISH, "해산물파스타", 35000),
-    CHRISTMAS_PASTA(MAIN_DISH, "크리스마스파스타", 25000),
+    T_BONE_STEAK(MAIN_DISH, "티본스테이크", 5_5000),
+    BBQ_RIB(MAIN_DISH, "바비큐립", 54_000),
+    SEAFOOD_SPAGHETTI(MAIN_DISH, "해산물파스타", 35_000),
+    CHRISTMAS_PASTA(MAIN_DISH, "크리스마스파스타", 25_000),
 
-    CHOCOLATE_CAKE(DESSERT, "초코케이크", 15000),
-    ICE_CREAM(DESSERT, "아이스크림", 5000),
+    CHOCOLATE_CAKE(DESSERT, "초코케이크", 15_000),
+    ICE_CREAM(DESSERT, "아이스크림", 5_000),
 
-    ZERO_COKE(DRINK, "제로콜라", 3000),
-    RED_WINE(DRINK, "레드와인", 60000),
-    CHAMPAGNE(DRINK, "샴페인", 25000),
+    ZERO_COKE(DRINK, "제로콜라", 3_000),
+    RED_WINE(DRINK, "레드와인", 60_000),
+    CHAMPAGNE(DRINK, "샴페인", 25_000),
 
     NOTHING(NONE, "", 0);
 

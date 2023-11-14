@@ -16,6 +16,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 class OrderedMenuTest {
+
     @Nested
     @DisplayName("메뉴와 수량으로 주문된 메뉴를 생성한다.")
     class createOrderedMenu {

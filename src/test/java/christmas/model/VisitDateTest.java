@@ -67,7 +67,7 @@ class VisitDateTest {
         VisitDate visitDate = new VisitDate(given);
 
         // when
-        boolean result = visitDate.isChristmasDiscountEnabled();
+        boolean result = visitDate.isChristmasEventRange();
 
         // then
         assertThat(result).isEqualTo(expected);
@@ -95,7 +95,7 @@ class VisitDateTest {
         VisitDate visitDate = new VisitDate(given);
 
         // when
-        boolean result = visitDate.isSpecialDay();
+        boolean result = visitDate.isSpecialDate();
 
         // then
         assertThat(result).isEqualTo(expected);

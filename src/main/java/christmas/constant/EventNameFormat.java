@@ -13,11 +13,6 @@ public enum EventNameFormat {
         this.format = format;
     }
 
-    @Override
-    public String toString() {
-        return super.toString();
-    }
-
     public String getFormat() {
         return format;
     }
