@@ -42,7 +42,7 @@ class OrderSheetsTest {
                     .hasMessage(INVALID_ORDER.getMessage());
         }
 
-        @DisplayName("[실패] 메뉴이름이 중복 주문될 경우 예외 예외를 발생시킨다.")
+        @DisplayName("[실패] 메뉴이름이 중복 주문될 경우 예외를 발생시킨다.")
         @Test
         void exceptionDuplicatedMenuNames() {
             // given
@@ -54,6 +54,17 @@ class OrderSheetsTest {
                     .hasMessage(INVALID_ORDER.getMessage());
         }
 
+        @DisplayName("[실패] 메뉴 수량이 제한된 수량보다 큰거나 숫자형식이 아닐 경우 예외를 발생시킨다.")
+        @Test
+        void exceptionInvalidNumberFormat() {
+            // given
+            List<String> given = getMenuList("타파스-999999999999");
+            OrderSheets orderSheets = new OrderSheets(given);
+            // when //then
+            assertThatThrownBy(orderSheets::getOrderedMenus)
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage(INVALID_ORDER.getMessage());
+        }
     }
 
     @DisplayName("주문서의 개수만큼 주문 완료된 메뉴 목록을 생성한다.")
