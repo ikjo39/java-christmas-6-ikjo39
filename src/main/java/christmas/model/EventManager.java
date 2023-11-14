@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EventManager {
+    private static final int NO_DISCOUNT = 0;
     private static final int GIVE_AWAY_AMOUNT = 1;
     private static final Menu GIVEAWAY_MENU = Menu.CHAMPAGNE;
     private static final OrderedMenu GIVE_AWAY = new OrderedMenu(GIVEAWAY_MENU, GIVE_AWAY_AMOUNT);
@@ -50,7 +51,7 @@ public class EventManager {
         if (isSatisfiedGiveaway()) {
             return GIVE_AWAY.calculatePrice();
         }
-        return 0;
+        return NO_DISCOUNT;
     }
 
     private boolean isSatisfiedGiveaway() {
