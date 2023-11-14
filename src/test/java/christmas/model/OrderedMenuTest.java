@@ -53,7 +53,7 @@ class OrderedMenuTest {
             int amount = 0;
 
             // when // then
-            assertThatThrownBy(() -> new OrderedMenu(NOTHING, amount))
+            assertThatThrownBy(() -> new OrderedMenu(BBQ_RIB, amount))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage(INVALID_ORDER.getMessage());
         }
