@@ -4,13 +4,6 @@ import java.util.List;
 
 public record EventBenefits(List<EventBenefit> eventBenefits) {
 
-    public boolean isNone() {
-        long disabledEventCount = eventBenefits.stream()
-                .filter(eventBenefit -> !eventBenefit.isEventEnabled())
-                .count();
-        return disabledEventCount == eventBenefits.size();
-    }
-
     public int getTotalBenefits() {
         return eventBenefits.stream()
                 .map(EventBenefit::discountAmount)

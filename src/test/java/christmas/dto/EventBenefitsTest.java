@@ -15,20 +15,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 class EventBenefitsTest {
 
-    @DisplayName("이벤트 혜택들이 하나도 없는지 확인한다.")
-    @MethodSource("generateDiscountAmountsIsNone")
-    @ParameterizedTest
-    void isNone(List<Integer> discountAmounts, boolean expected) {
-        // given
-        EventBenefits benefits = createBenefit(discountAmounts);
-
-        // when
-        boolean result = benefits.isNone();
-
-        // then
-        assertThat(result).isEqualTo(expected);
-    }
-
     @DisplayName("총 혜택 금액을 구한다.")
     @MethodSource("generateDiscountAmountsTotalBenefits")
     @ParameterizedTest
@@ -69,14 +55,6 @@ class EventBenefitsTest {
 
         // then
         assertThat(result).hasSize(expected);
-    }
-
-    static Stream<Arguments> generateDiscountAmountsIsNone() {
-        return Stream.of(
-                Arguments.of(List.of(0, 0, 0, 0, 0), true),
-                Arguments.of(List.of(1, 2, 3, 4, 5), false),
-                Arguments.of(List.of(1, 1, 1, 1, 1), false)
-        );
     }
 
     static Stream<Arguments> generateDiscountAmountsTotalBenefits() {

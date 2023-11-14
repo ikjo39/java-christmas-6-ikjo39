@@ -71,12 +71,12 @@ public class OutputView {
 
     public void printBenefits(EventBenefits eventBenefits) {
         printOutputMessage(BENEFITS);
-        if (eventBenefits.isNone()) {
+        List<EventBenefit> enabledBenefits = eventBenefits.getEnabledBenefits();
+        if (enabledBenefits.isEmpty()) {
             System.out.printf(NONE.getMessage());
             System.out.println();
             return;
         }
-        List<EventBenefit> enabledBenefits = eventBenefits.getEnabledBenefits();
         enabledBenefits.forEach(eventBenefit -> {
             String format = eventBenefit.eventNameFormat().getFormat();
             System.out.printf(format, NUMBER_FORMAT.format(eventBenefit.discountAmount()));
