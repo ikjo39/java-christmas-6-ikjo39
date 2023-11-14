@@ -3,10 +3,10 @@ package christmas.controller;
 import christmas.dto.EventBenefits;
 import christmas.handler.ExceptionRetryHandler;
 import christmas.model.DiscountCalculator;
-import christmas.model.EventTotalBenefit;
 import christmas.model.EventManager;
 import christmas.model.OrderSheets;
 import christmas.model.OrderedMenus;
+import christmas.model.TotalDiscountManager;
 import christmas.model.TotalPrice;
 import christmas.model.VisitDate;
 import christmas.view.InputView;
@@ -33,12 +33,14 @@ public class EventPlannerController {
         TotalPrice totalPrice = new TotalPrice(orderedMenus.calculateTotalPrice());
         EventManager eventManager = new EventManager(new DiscountCalculator(orderedMenus, visitDate), totalPrice);
         outputView.printGiveAwayMenu(eventManager.getGiveaway());
-        EventBenefits benefits = eventManager.getEventBenefits();
+        EventBenefits benefits = new EventBenefits(eventManager.getEventBenefits());
         outputView.printBenefits(benefits);
         outputView.printBenefitsTotal(benefits);
-        outputView.printAfterDiscounted(totalPrice, benefits);
-        EventTotalBenefit totalBenefit = new EventTotalBenefit(benefits.getTotalBenefits());
-        outputView.printBadge(totalBenefit);
+        TotalDiscountManager totalDiscountManager = new TotalDiscountManager(
+                benefits.getTotalDiscounts(), eventManager
+        );
+        outputView.printAfterDiscounted(totalDiscountManager);
+        outputView.printBadge(totalDiscountManager);
     }
 
     private OrderedMenus getOrderedMenus() {

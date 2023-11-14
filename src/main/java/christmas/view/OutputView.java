@@ -17,10 +17,9 @@ import christmas.constant.OutputMessage;
 import christmas.dto.EventBenefit;
 import christmas.dto.EventBenefits;
 import christmas.dto.GiveAway;
-import christmas.model.EventTotalBenefit;
 import christmas.model.OrderedMenu;
 import christmas.model.OrderedMenus;
-import christmas.model.TotalPrice;
+import christmas.model.TotalDiscountManager;
 import christmas.model.VisitDate;
 import java.text.DecimalFormat;
 import java.util.List;
@@ -98,16 +97,16 @@ public class OutputView {
         System.out.println();
     }
 
-    public void printAfterDiscounted(TotalPrice totalPrice, EventBenefits benefits) {
+    public void printAfterDiscounted(TotalDiscountManager totalDiscountManager) {
         printOutputMessage(AFTER_DISCOUNTED_AMOUNT);
-        int result = totalPrice.calculateAfterDiscountedAmount(benefits);
-        System.out.printf(AMOUNT_FORMAT.getMessage(), NUMBER_FORMAT.format(result));
+        String formattedNumber = NUMBER_FORMAT.format(totalDiscountManager.getDiscountedTotalPrice());
+        System.out.printf(AMOUNT_FORMAT.getMessage(), formattedNumber);
         System.out.println();
     }
 
-    public void printBadge(EventTotalBenefit totalBenefit) {
+    public void printBadge(TotalDiscountManager totalDiscountManager) {
         printOutputMessage(EVENT_BADGE);
-        System.out.println(totalBenefit.getEventBadge().getName());
+        System.out.println(totalDiscountManager.getEventBadge().getName());
     }
 
     private void printOutputMessage(OutputMessage outputMessage) {
