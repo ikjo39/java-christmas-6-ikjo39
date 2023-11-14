@@ -15,8 +15,7 @@ public enum OutputMessage {
 
     EVENT_PREVIEW_INTRODUCTION_FORMAT("%d월 %d일에 우테코 식당에서 받을 이벤트 혜택 미리 보기!%n"),
     ORDERED_MENU_FORMAT("%s %d개%n"),
-    AMOUNT_FORMAT("%s원%n"),
-    BENEFIT_AMOUNT_FORMAT("-%s원%n");
+    AMOUNT_FORMAT("%s원%n");
 
     private final String message;
 

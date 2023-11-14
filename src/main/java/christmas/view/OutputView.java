@@ -3,7 +3,6 @@ package christmas.view;
 import static christmas.constant.OutputMessage.AFTER_DISCOUNTED_AMOUNT;
 import static christmas.constant.OutputMessage.AMOUNT_FORMAT;
 import static christmas.constant.OutputMessage.BENEFITS;
-import static christmas.constant.OutputMessage.BENEFIT_AMOUNT_FORMAT;
 import static christmas.constant.OutputMessage.EVENT_BADGE;
 import static christmas.constant.OutputMessage.EVENT_PREVIEW_INTRODUCTION_FORMAT;
 import static christmas.constant.OutputMessage.GIVEAWAY_MENU;
@@ -14,11 +13,10 @@ import static christmas.constant.OutputMessage.PLANNER_INTRODUCTION;
 import static christmas.constant.OutputMessage.TOTAL_BENEFITS_AMOUNT;
 import static christmas.constant.OutputMessage.TOTAL_PRICE;
 
-import christmas.constant.DiscountEvent;
 import christmas.constant.OutputMessage;
-import christmas.dto.BenefitInfos;
+import christmas.dto.EventBenefit;
+import christmas.dto.EventBenefits;
 import christmas.dto.GiveAway;
-import christmas.model.Benefits;
 import christmas.model.EventTotalBenefit;
 import christmas.model.OrderedMenu;
 import christmas.model.OrderedMenus;
@@ -26,10 +24,9 @@ import christmas.model.TotalPrice;
 import christmas.model.VisitDate;
 import java.text.DecimalFormat;
 import java.util.List;
-import java.util.Map;
 
 public class OutputView {
-    private static final DecimalFormat NUMBER_FORMAT = new DecimalFormat("#,##0");
+    private static final DecimalFormat NUMBER_FORMAT = new DecimalFormat("#,##0;-#,##0");
 
     public void printExceptionMessage(String message) {
         System.out.println(message);
@@ -66,32 +63,42 @@ public class OutputView {
         printOutputMessage(GIVEAWAY_MENU);
         if (giveAway.isEnabled()) {
             System.out.printf(ORDERED_MENU_FORMAT.getMessage(), giveAway.getMenuName(), giveAway.getAmount());
+            System.out.println();
             return;
         }
         System.out.printf(NONE.getMessage());
-    }
-
-    public void printBenefits(BenefitInfos benefitInfos) {
-        printOutputMessage(BENEFITS);
-        if (!benefitInfos.isEmpty()) {
-            Map<DiscountEvent, Integer> events = benefitInfos.events();
-            events.keySet()
-                    .stream()
-                    .map(discountEvent ->
-                            String.format(discountEvent.getFormat(), NUMBER_FORMAT.format(events.get(discountEvent))))
-                    .forEach(System.out::printf);
-            return;
-        }
-        System.out.printf(NONE.getMessage());
-    }
-
-    public void printBenefitsTotal(Benefits benefits) {
-        printOutputMessage(TOTAL_BENEFITS_AMOUNT);
-        System.out.printf(BENEFIT_AMOUNT_FORMAT.getMessage(), NUMBER_FORMAT.format(benefits.getTotalBenefits()));
         System.out.println();
     }
 
-    public void printAfterDiscounted(TotalPrice totalPrice, Benefits benefits) {
+    public void printBenefits(EventBenefits eventBenefits) {
+        printOutputMessage(BENEFITS);
+        if (eventBenefits.isNone()) {
+            System.out.printf(NONE.getMessage());
+            System.out.println();
+            return;
+        }
+        printValidEventBenefits(eventBenefits);
+        System.out.println();
+    }
+
+    private void printValidEventBenefits(EventBenefits eventBenefits) {
+        eventBenefits.eventBenefits()
+                .stream()
+                .filter(EventBenefit::isEventEnabled)
+                .forEach(eventBenefit -> {
+                            String format = eventBenefit.eventNameFormat().getFormat();
+                            System.out.printf(format, NUMBER_FORMAT.format(eventBenefit.discountAmount()));
+                        }
+                );
+    }
+
+    public void printBenefitsTotal(EventBenefits benefits) {
+        printOutputMessage(TOTAL_BENEFITS_AMOUNT);
+        System.out.printf(AMOUNT_FORMAT.getMessage(), NUMBER_FORMAT.format(-benefits.getTotalBenefits()));
+        System.out.println();
+    }
+
+    public void printAfterDiscounted(TotalPrice totalPrice, EventBenefits benefits) {
         printOutputMessage(AFTER_DISCOUNTED_AMOUNT);
         int result = totalPrice.calculateAfterDiscountedAmount(benefits);
         System.out.printf(AMOUNT_FORMAT.getMessage(), NUMBER_FORMAT.format(result));

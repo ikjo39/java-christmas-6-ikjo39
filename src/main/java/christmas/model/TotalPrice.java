@@ -1,5 +1,7 @@
 package christmas.model;
 
+import christmas.dto.EventBenefits;
+
 public class TotalPrice {
     private static final int MINIMUM_PRICE_TO_EVENT_START = 10_000;
     private static final int MINIMUM_PRICE_TO_GET_GIVEAWAY = 120_000;
@@ -18,7 +20,7 @@ public class TotalPrice {
         return totalPrice >= MINIMUM_PRICE_TO_GET_GIVEAWAY;
     }
 
-    public int calculateAfterDiscountedAmount(Benefits benefits) {
+    public int calculateAfterDiscountedAmount(EventBenefits benefits) {
         return totalPrice - benefits.getTotalDiscounts();
     }
 }

@@ -1,10 +1,10 @@
 package christmas.controller;
 
+import christmas.dto.EventBenefits;
 import christmas.handler.ExceptionRetryHandler;
-import christmas.model.Benefits;
 import christmas.model.DiscountCalculator;
 import christmas.model.EventTotalBenefit;
-import christmas.model.EventValidator;
+import christmas.model.EventManager;
 import christmas.model.OrderSheets;
 import christmas.model.OrderedMenus;
 import christmas.model.TotalPrice;
@@ -31,10 +31,10 @@ public class EventPlannerController {
         outputView.printOrderedMenus(orderedMenus);
         outputView.printTotalPriceBeforeDiscount(orderedMenus);
         TotalPrice totalPrice = new TotalPrice(orderedMenus.calculateTotalPrice());
-        EventValidator eventValidator = new EventValidator(new DiscountCalculator(orderedMenus, visitDate), totalPrice);
-        outputView.printGiveAwayMenu(eventValidator.getGiveAway());
-        Benefits benefits = eventValidator.getBenefits();
-        outputView.printBenefits(benefits.getBenefitInfos());
+        EventManager eventManager = new EventManager(new DiscountCalculator(orderedMenus, visitDate), totalPrice);
+        outputView.printGiveAwayMenu(eventManager.getGiveaway());
+        EventBenefits benefits = eventManager.getEventBenefits();
+        outputView.printBenefits(benefits);
         outputView.printBenefitsTotal(benefits);
         outputView.printAfterDiscounted(totalPrice, benefits);
         EventTotalBenefit totalBenefit = new EventTotalBenefit(benefits.getTotalBenefits());
