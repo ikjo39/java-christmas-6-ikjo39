@@ -35,4 +35,19 @@ class TotalPriceTest {
         //then
         assertThat(result).isEqualTo(expected);
     }
+
+    @DisplayName("할인 후 예상 금액을 계산한다.")
+    @CsvSource(value = {"5000,1000", "6000,2000", "7000,3000"})
+    @ParameterizedTest
+    void calculateAfterDiscountedAmount(int givenTotal, int givenDiscount) {
+        // given
+        TotalPrice totalPrice = new TotalPrice(givenTotal);
+        int expected = givenTotal - givenDiscount;
+
+        // when
+        int result = totalPrice.calculateAfterDiscountedAmount(givenDiscount);
+
+        //then
+        assertThat(result).isEqualTo(expected);
+    }
 }
