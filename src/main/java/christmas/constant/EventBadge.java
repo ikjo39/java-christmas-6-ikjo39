@@ -14,6 +14,10 @@ public enum EventBadge {
         this.minimumAmount = minimumAmount;
     }
 
+    public boolean isMoreThanMinimumAmount(int amount) {
+        return amount > minimumAmount;
+    }
+
     public String getName() {
         return name;
     }

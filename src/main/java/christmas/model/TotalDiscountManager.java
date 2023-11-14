@@ -20,7 +20,7 @@ public class TotalDiscountManager {
     public EventBadge getEventBadge() {
         return Arrays.stream(EventBadge.values())
                 .sorted(Comparator.comparingInt(EventBadge::getMinimumAmount).reversed())
-                .filter(eventBadge -> totalDiscount > eventBadge.getMinimumAmount())
+                .filter(eventBadge -> eventBadge.isMoreThanMinimumAmount(totalDiscount))
                 .findFirst()
                 .orElse(EventBadge.NONE);
     }
