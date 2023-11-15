@@ -2,10 +2,10 @@ package christmas.controller;
 
 import christmas.dto.EventBenefits;
 import christmas.handler.ExceptionRetryHandler;
+import christmas.model.DiscountedPriceBadgeManager;
 import christmas.model.EventManager;
 import christmas.model.OrderSheets;
 import christmas.model.OrderedMenus;
-import christmas.model.TotalDiscountManager;
 import christmas.model.TotalPrice;
 import christmas.model.VisitDate;
 import christmas.view.InputView;
@@ -57,9 +57,9 @@ public class EventPlannerController {
     }
 
     private void printDiscountedPriceAndBadge(TotalPrice totalPrice, EventBenefits benefits) {
-        TotalDiscountManager totalDiscountManager = new TotalDiscountManager(totalPrice, benefits);
-        outputView.printAfterDiscounted(totalDiscountManager);
-        outputView.printBadge(totalDiscountManager);
+        DiscountedPriceBadgeManager discountedPriceBadgeManager = new DiscountedPriceBadgeManager(totalPrice, benefits);
+        outputView.printAfterDiscounted(discountedPriceBadgeManager);
+        outputView.printBadge(discountedPriceBadgeManager);
     }
 
     private OrderedMenus getOrderedMenusUntilValidInput() {

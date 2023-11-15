@@ -5,11 +5,11 @@ import christmas.dto.EventBenefits;
 import java.util.Arrays;
 import java.util.Comparator;
 
-public class TotalDiscountManager {
+public class DiscountedPriceBadgeManager {
     private final TotalPrice totalPrice;
     private final EventBenefits benefits;
 
-    public TotalDiscountManager(TotalPrice totalPrice, EventBenefits benefits) {
+    public DiscountedPriceBadgeManager(TotalPrice totalPrice, EventBenefits benefits) {
         this.totalPrice = totalPrice;
         this.benefits = benefits;
     }
