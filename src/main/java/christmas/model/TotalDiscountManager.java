@@ -6,16 +6,16 @@ import java.util.Arrays;
 import java.util.Comparator;
 
 public class TotalDiscountManager {
+    private final TotalPrice totalPrice;
     private final EventBenefits benefits;
-    private final EventManager eventManager;
 
-    public TotalDiscountManager(EventBenefits benefits, EventManager eventManager) {
+    public TotalDiscountManager(TotalPrice totalPrice, EventBenefits benefits) {
+        this.totalPrice = totalPrice;
         this.benefits = benefits;
-        this.eventManager = eventManager;
     }
 
     public int getDiscountedTotalPrice() {
-        return eventManager.getTotalDiscountedPrice(benefits.getTotalDiscounts());
+        return totalPrice.calculateAfterDiscountedAmount(benefits.getTotalDiscounts());
     }
 
     public EventBadge getEventBadge() {

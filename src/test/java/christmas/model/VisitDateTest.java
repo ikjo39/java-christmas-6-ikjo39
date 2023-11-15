@@ -62,12 +62,13 @@ class VisitDateTest {
     @DisplayName("크리스마스 이벤트 기간인지 여부를 확인한다.")
     @CsvSource(value = {"1,true", "25,true", "26,false", "30,false"})
     @ParameterizedTest
-    void isChristmasDiscountEnabled(int given, boolean expected) {
+    void isChristmasEventRange(int given, boolean expected) {
         // given
+        LocalDate startDate = LocalDate.of(2023, 12, given);
         VisitDate visitDate = new VisitDate(given);
 
         // when
-        boolean result = visitDate.isChristmasEventRange();
+        boolean result = visitDate.isChristmasEventRange(startDate);
 
         // then
         assertThat(result).isEqualTo(expected);
@@ -90,12 +91,29 @@ class VisitDateTest {
     @DisplayName("특별한 날인지 여부를 확인한다.")
     @CsvSource(value = {"10,true", "17,true", "25,true", "7,false"})
     @ParameterizedTest
-    void isSpecial(int given, boolean expected) {
+    void isSpecialDate(int given, boolean expected) {
         // given
         VisitDate visitDate = new VisitDate(given);
 
         // when
         boolean result = visitDate.isSpecialDate();
+
+        // then
+        assertThat(result).isEqualTo(expected);
+    }
+
+    @DisplayName("시작일과 종료일로 방문일이 기한 내에 있는지 확인한다.")
+    @CsvSource(value = {"1,31,true", "5,7,false"})
+    @ParameterizedTest
+    void isVisitDateInRange(int startDay, int endDay, boolean expected) {
+        // given
+        int givenDay = 3;
+        LocalDate startDate = LocalDate.of(2023, 12, startDay);
+        LocalDate endDate = LocalDate.of(2023, 12, endDay);
+        VisitDate visitDate = new VisitDate(givenDay);
+
+        // when
+        boolean result = visitDate.isVisitDateInRange(startDate, endDate);
 
         // then
         assertThat(result).isEqualTo(expected);

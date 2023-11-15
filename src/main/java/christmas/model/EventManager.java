@@ -1,64 +1,45 @@
 package christmas.model;
 
-import static christmas.constant.EventNameFormat.CHRISTMAS_D_DAY_EVENT;
-import static christmas.constant.EventNameFormat.GIVEAWAY_EVENT;
-import static christmas.constant.EventNameFormat.SPECIAL_EVENT;
-import static christmas.constant.EventNameFormat.WEEKDAY_EVENT;
-import static christmas.constant.EventNameFormat.WEEKEND_EVENT;
-
-import christmas.constant.Menu;
 import christmas.dto.EventBenefit;
 import christmas.dto.GiveAway;
+import christmas.model.event.ChristmasEvent;
+import christmas.model.event.Event;
+import christmas.model.event.GiveawayEvent;
+import christmas.model.event.SpecialEvent;
+import christmas.model.event.WeekdayEvent;
+import christmas.model.event.WeekendEvent;
 import java.util.ArrayList;
 import java.util.List;
 
 public class EventManager {
-    private static final int NO_DISCOUNT = 0;
-    private static final int GIVE_AWAY_AMOUNT = 1;
-    private static final Menu GIVEAWAY_MENU = Menu.CHAMPAGNE;
-    private static final OrderedMenu GIVE_AWAY = new OrderedMenu(GIVEAWAY_MENU, GIVE_AWAY_AMOUNT);
+    private final Event christmasEvent;
+    private final Event weekendEvent;
+    private final Event weekdayEvent;
+    private final Event specialEvent;
+    private final GiveawayEvent giveawayEvent;
 
-    private final DiscountCalculator discountCalculator;
-    private final TotalPrice totalPrice;
-
-    public EventManager(DiscountCalculator discountCalculator, TotalPrice totalPrice) {
-        this.discountCalculator = discountCalculator;
-        this.totalPrice = totalPrice;
+    public EventManager(VisitDate visitDate, OrderedMenus orderedMenus, TotalPrice totalPrice) {
+        this.christmasEvent = new ChristmasEvent(visitDate, orderedMenus, totalPrice);
+        this.weekendEvent = new WeekendEvent(visitDate, orderedMenus, totalPrice);
+        this.weekdayEvent = new WeekdayEvent(visitDate, orderedMenus, totalPrice);
+        this.specialEvent = new SpecialEvent(visitDate, orderedMenus, totalPrice);
+        this.giveawayEvent = new GiveawayEvent(visitDate, orderedMenus, totalPrice);
     }
 
     public GiveAway getGiveaway() {
-        return new GiveAway(GIVE_AWAY, isSatisfiedGiveaway());
+        return giveawayEvent.getGiveaway();
     }
 
     public List<EventBenefit> getEventBenefits() {
         List<EventBenefit> benefits = new ArrayList<>();
-        if (!isEnabled()) {
+        if (!christmasEvent.isTotalEventEnabled()) {
             return benefits;
         }
-        benefits.add(new EventBenefit(GIVEAWAY_EVENT, getGiveawayDiscount()));
-        benefits.add((new EventBenefit(CHRISTMAS_D_DAY_EVENT, discountCalculator.getChristmasDiscount())));
-        benefits.add((new EventBenefit(WEEKEND_EVENT, discountCalculator.getWeekendDiscount())));
-        benefits.add((new EventBenefit(WEEKDAY_EVENT, discountCalculator.getWeekdayDiscount())));
-        benefits.add(new EventBenefit(SPECIAL_EVENT, discountCalculator.getSpecialDiscount()));
+        benefits.add(christmasEvent.getEventBenefit());
+        benefits.add(weekendEvent.getEventBenefit());
+        benefits.add(weekdayEvent.getEventBenefit());
+        benefits.add(specialEvent.getEventBenefit());
+        benefits.add(giveawayEvent.getEventBenefit());
         return benefits.stream().toList();
-    }
-
-    public int getTotalDiscountedPrice(int totalDiscount) {
-        return totalPrice.calculateAfterDiscountedAmount(totalDiscount);
-    }
-
-    private int getGiveawayDiscount() {
-        if (isSatisfiedGiveaway()) {
-            return GIVE_AWAY.calculatePrice();
-        }
-        return NO_DISCOUNT;
-    }
-
-    private boolean isSatisfiedGiveaway() {
-        return totalPrice.isSatisfiedGiveaway();
-    }
-
-    private boolean isEnabled() {
-        return totalPrice.isEventEnabled();
     }
 }

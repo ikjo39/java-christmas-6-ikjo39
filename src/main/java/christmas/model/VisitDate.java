@@ -40,8 +40,9 @@ public class VisitDate {
         return visitDate.getDayOfMonth();
     }
 
-    public boolean isChristmasEventRange() {
-        return CHRISTMAS_DATE.isAfter(visitDate) || CHRISTMAS_DATE.isEqual(visitDate);
+    public boolean isChristmasEventRange(LocalDate startDate) {
+        return (visitDate.isEqual(startDate) || visitDate.isAfter(startDate))
+                && (visitDate.isBefore(CHRISTMAS_DATE) || visitDate.isEqual(CHRISTMAS_DATE));
     }
 
     public boolean isWeekend() {
@@ -50,5 +51,10 @@ public class VisitDate {
 
     public boolean isSpecialDate() {
         return visitDayOfWeek.equals(SUNDAY) || visitDate.isEqual(CHRISTMAS_DATE);
+    }
+
+    public boolean isVisitDateInRange(LocalDate startDate, LocalDate endDate) {
+        return (visitDate.isEqual(startDate) || visitDate.isAfter(startDate))
+        && (visitDate.isBefore(endDate) || visitDate.isEqual(endDate));
     }
 }

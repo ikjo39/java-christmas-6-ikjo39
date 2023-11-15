@@ -2,7 +2,6 @@ package christmas.controller;
 
 import christmas.dto.EventBenefits;
 import christmas.handler.ExceptionRetryHandler;
-import christmas.model.DiscountCalculator;
 import christmas.model.EventManager;
 import christmas.model.OrderSheets;
 import christmas.model.OrderedMenus;
@@ -28,20 +27,16 @@ public class EventPlannerController {
 
         VisitDate visitDate = getVisitDateUntilValidInput();
         OrderedMenus orderedMenus = getOrderedMenusUntilValidInput();
-        EventManager eventManager = getEventManager(visitDate, orderedMenus);
+        TotalPrice totalPrice = new TotalPrice(orderedMenus.calculateTotalPrice());
+        EventManager eventManager = new EventManager(visitDate, orderedMenus, totalPrice);
         EventBenefits benefits = new EventBenefits(eventManager.getEventBenefits());
 
         printGivenUserInfo(visitDate, orderedMenus);
-        printEventResult(eventManager, benefits);
+        printEventResult(totalPrice, eventManager, benefits);
     }
 
     private void printIntroduction() {
         outputView.printPlannerIntroduction();
-    }
-
-    private static EventManager getEventManager(VisitDate visitDate, OrderedMenus orderedMenus) {
-        TotalPrice totalPrice = new TotalPrice(orderedMenus.calculateTotalPrice());
-        return new EventManager(new DiscountCalculator(orderedMenus, visitDate), totalPrice);
     }
 
     private void printGivenUserInfo(VisitDate visitDate, OrderedMenus orderedMenus) {
@@ -50,9 +45,9 @@ public class EventPlannerController {
         outputView.printTotalPriceBeforeDiscount(orderedMenus);
     }
 
-    private void printEventResult(EventManager eventManager, EventBenefits benefits) {
+    private void printEventResult(TotalPrice totalPrice, EventManager eventManager, EventBenefits benefits) {
         printDiscountInfo(eventManager, benefits);
-        printDiscountedPriceAndBadge(eventManager, benefits);
+        printDiscountedPriceAndBadge(totalPrice, benefits);
     }
 
     private void printDiscountInfo(EventManager eventManager, EventBenefits benefits) {
@@ -61,9 +56,8 @@ public class EventPlannerController {
         outputView.printBenefitsTotal(benefits);
     }
 
-    private void printDiscountedPriceAndBadge(EventManager eventManager, EventBenefits benefits) {
-        TotalDiscountManager totalDiscountManager =
-                new TotalDiscountManager(benefits, eventManager);
+    private void printDiscountedPriceAndBadge(TotalPrice totalPrice, EventBenefits benefits) {
+        TotalDiscountManager totalDiscountManager = new TotalDiscountManager(totalPrice, benefits);
         outputView.printAfterDiscounted(totalDiscountManager);
         outputView.printBadge(totalDiscountManager);
     }
