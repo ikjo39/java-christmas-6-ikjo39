@@ -1,7 +1,7 @@
 package christmas.model;
 
 import christmas.dto.EventBenefit;
-import christmas.dto.GiveAway;
+import christmas.dto.Giveaway;
 import christmas.model.event.ChristmasEvent;
 import christmas.model.event.Event;
 import christmas.model.event.GiveawayEvent;
@@ -26,7 +26,7 @@ public class EventManager {
         this.giveawayEvent = new GiveawayEvent(visitDate, orderedMenus, totalPrice);
     }
 
-    public GiveAway getGiveaway() {
+    public Giveaway getGiveaway() {
         return giveawayEvent.getGiveaway();
     }
 

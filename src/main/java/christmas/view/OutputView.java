@@ -16,7 +16,7 @@ import static christmas.constant.OutputMessage.TOTAL_PRICE;
 import christmas.constant.OutputMessage;
 import christmas.dto.EventBenefit;
 import christmas.dto.EventBenefits;
-import christmas.dto.GiveAway;
+import christmas.dto.Giveaway;
 import christmas.model.OrderedMenu;
 import christmas.model.OrderedMenus;
 import christmas.model.TotalDiscountManager;
@@ -58,7 +58,7 @@ public class OutputView {
         System.out.println();
     }
 
-    public void printGiveAwayMenu(GiveAway giveAway) {
+    public void printGiveAwayMenu(Giveaway giveAway) {
         printOutputMessage(GIVEAWAY_MENU);
         if (giveAway.isEnabled()) {
             System.out.printf(ORDERED_MENU_FORMAT.getMessage(), giveAway.getMenuName(), giveAway.getAmount());

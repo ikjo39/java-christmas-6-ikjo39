@@ -22,7 +22,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-class GiveAwayEventTest {
+class GiveawayEventTest {
 
     @Nested
     @DisplayName("이벤트 혜택을 만든다.")

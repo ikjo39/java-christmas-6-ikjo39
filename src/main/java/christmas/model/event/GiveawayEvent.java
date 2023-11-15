@@ -5,7 +5,7 @@ import static christmas.constant.Menu.CHAMPAGNE;
 
 import christmas.constant.Menu;
 import christmas.dto.EventBenefit;
-import christmas.dto.GiveAway;
+import christmas.dto.Giveaway;
 import christmas.model.OrderedMenu;
 import christmas.model.OrderedMenus;
 import christmas.model.TotalPrice;
@@ -25,8 +25,8 @@ public class GiveawayEvent extends Event {
         super(visitDate, orderedMenus, totalPrice);
     }
 
-    public GiveAway getGiveaway() {
-        return new GiveAway(GIVE_AWAY, isEventEnabled());
+    public Giveaway getGiveaway() {
+        return new Giveaway(GIVE_AWAY, isEventEnabled());
     }
 
     @Override
