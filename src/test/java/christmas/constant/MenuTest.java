@@ -23,7 +23,7 @@ class MenuTest {
 
     static Stream<Arguments> generateData() {
         return Stream.of(
-                Arguments.of("양송이스프", Menu.MUSHROOM_CREAM_SOUP),
+                Arguments.of("양송이수프", Menu.MUSHROOM_CREAM_SOUP),
                 Arguments.of("바비큐립", Menu.BBQ_RIB),
                 Arguments.of("아무거나", Menu.NOTHING)
         );
