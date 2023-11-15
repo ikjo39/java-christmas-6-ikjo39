@@ -65,23 +65,23 @@ public class OutputView {
             System.out.println();
             return;
         }
-        System.out.printf(NONE.getMessage());
-        System.out.println();
+        printNone();
     }
 
     public void printBenefits(EventBenefits eventBenefits) {
         printOutputMessage(BENEFITS);
         List<EventBenefit> enabledBenefits = eventBenefits.getEnabledBenefits();
         if (enabledBenefits.isEmpty()) {
-            System.out.printf(NONE.getMessage());
-            System.out.println();
+            printNone();
             return;
         }
-        enabledBenefits.forEach(eventBenefit -> {
-            String format = eventBenefit.eventNameFormat().getFormat();
-            System.out.printf(format, NUMBER_FORMAT.format(eventBenefit.discountAmount()));
-        });
+        enabledBenefits.forEach(this::printEventBenefit);
         System.out.println();
+    }
+
+    private void printEventBenefit(EventBenefit eventBenefit) {
+        String format = eventBenefit.eventNameFormat().getFormat();
+        System.out.printf(format, NUMBER_FORMAT.format(eventBenefit.discountAmount()));
     }
 
     public void printBenefitsTotal(EventBenefits benefits) {
@@ -100,6 +100,11 @@ public class OutputView {
     public void printBadge(DiscountedPriceBadgeManager discountedPriceBadgeManager) {
         printOutputMessage(EVENT_BADGE);
         System.out.println(discountedPriceBadgeManager.getEventBadge().getName());
+    }
+
+    private void printNone() {
+        System.out.printf(NONE.getMessage());
+        System.out.println();
     }
 
     private void printOutputMessage(OutputMessage outputMessage) {
