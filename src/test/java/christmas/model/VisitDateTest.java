@@ -59,21 +59,6 @@ class VisitDateTest {
         assertThat(result).isEqualTo(given);
     }
 
-    @DisplayName("크리스마스 이벤트 기간인지 여부를 확인한다.")
-    @CsvSource(value = {"1,true", "25,true", "26,false", "30,false"})
-    @ParameterizedTest
-    void isChristmasEventRange(int given, boolean expected) {
-        // given
-        LocalDate startDate = LocalDate.of(2023, 12, given);
-        VisitDate visitDate = new VisitDate(given);
-
-        // when
-        boolean result = visitDate.isChristmasEventRange(startDate);
-
-        // then
-        assertThat(result).isEqualTo(expected);
-    }
-
     @DisplayName("주말인지 여부를 확인한다.")
     @CsvSource(value = {"8,true", "16,true", "6,false", "7,false"})
     @ParameterizedTest

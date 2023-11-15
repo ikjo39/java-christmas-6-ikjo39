@@ -1,5 +1,8 @@
 package christmas.model;
 
+import static christmas.constant.EventDateConfig.CHRISTMAS_EVENT_END_DAY;
+import static christmas.constant.EventDate.EVENT_MONTH;
+import static christmas.constant.EventDate.EVENT_YEAR;
 import static christmas.constant.ExceptionMessage.INVALID_VISIT_DAY;
 import static java.time.DayOfWeek.FRIDAY;
 import static java.time.DayOfWeek.SATURDAY;
@@ -11,9 +14,6 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class VisitDate {
-    private static final int EVENT_YEAR = 2023;
-    private static final int EVENT_MONTH = 12;
-    private static final LocalDate CHRISTMAS_DATE = LocalDate.of(EVENT_YEAR, 12, 25);
     private static final List<DayOfWeek> WEEKENDS = List.of(FRIDAY, SATURDAY);
 
     private final LocalDate visitDate;
@@ -26,23 +26,18 @@ public class VisitDate {
 
     private static LocalDate convertDayToLocalDate(int day) {
         try {
-            return LocalDate.of(EVENT_YEAR, EVENT_MONTH, day);
+            return LocalDate.of(EVENT_YEAR.getValue(), EVENT_MONTH.getValue(), day);
         } catch (DateTimeException e) {
             throw new IllegalArgumentException(INVALID_VISIT_DAY.getMessage());
         }
     }
 
     public int getMonth() {
-        return EVENT_MONTH;
+        return EVENT_MONTH.getValue();
     }
 
     public int getDayOfMonth() {
         return visitDate.getDayOfMonth();
-    }
-
-    public boolean isChristmasEventRange(LocalDate startDate) {
-        return (visitDate.isEqual(startDate) || visitDate.isAfter(startDate))
-                && (visitDate.isBefore(CHRISTMAS_DATE) || visitDate.isEqual(CHRISTMAS_DATE));
     }
 
     public boolean isWeekend() {
@@ -50,11 +45,12 @@ public class VisitDate {
     }
 
     public boolean isSpecialDate() {
-        return visitDayOfWeek.equals(SUNDAY) || visitDate.isEqual(CHRISTMAS_DATE);
+        return visitDayOfWeek.equals(SUNDAY)
+                || visitDate.isEqual(CHRISTMAS_EVENT_END_DAY.getDate());
     }
 
     public boolean isVisitDateInRange(LocalDate startDate, LocalDate endDate) {
         return (visitDate.isEqual(startDate) || visitDate.isAfter(startDate))
-        && (visitDate.isBefore(endDate) || visitDate.isEqual(endDate));
+                && (visitDate.isBefore(endDate) || visitDate.isEqual(endDate));
     }
 }
